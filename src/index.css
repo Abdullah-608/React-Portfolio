@@ -131,3 +131,59 @@
   padding: 0;
   text-align: center;
 }
+/* Theme Toggle Animations */
+
+
+
+
+html.dark .theme-toggle-ripple {
+  background-color: rgba(30, 41, 59, 0.7); /* slate-800 with opacity */
+}
+
+html:not(.dark) .theme-toggle-ripple {
+  background-color: rgba(255, 255, 255, 0.7); /* white with opacity */
+}
+
+.theme-toggle-button {
+  transform-origin: center;
+  transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), 
+              box-shadow 0.3s ease;
+}
+
+.theme-toggle-button:active {
+  transform: scale(0.95);
+}
+
+/* Icon animations */
+.icon-container {
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.icon-rotate-out {
+  animation: rotateOut 0.3s forwards;
+}
+
+.icon-rotate-in {
+  animation: rotateIn 0.3s forwards;
+}
+
+
+
+
+
+/* Ray animations */
+
+
+
+.stars-container, .rays-container {
+  animation: fadeIn 0.3s forwards;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
