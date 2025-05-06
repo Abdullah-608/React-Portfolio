@@ -2,7 +2,7 @@
 
 A modern, responsive portfolio website built with React, Vite, and Tailwind CSS showcasing professional skills, projects, and contact information.
 
-![Portfolio Preview](public/projects/pic.png)
+
 ![Hero Section](image.png)
 ![DarkMode](image-1.png)
 ![About Section](image-2.png)
