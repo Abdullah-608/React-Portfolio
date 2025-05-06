@@ -1,11 +1,11 @@
-/*
+
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { Home } from "./pages/Home";
 import { NotFound } from "./pages/NotFound";
-import { Toaster } from "@/components/ui/toaster";
-import { LoadingScreen } from "./components/LoadingScreen";
+//import { Toaster } from "@/components/ui/toaster";
+//import { LoadingScreen } from "./components/LoadingScreen";
 import { useState, useEffect } from "react";
-*/
+
 function App() {
   /*
   const [loading, setLoading] = useState(true);
@@ -23,11 +23,11 @@ function App() {
   if (loading) {
     return <LoadingScreen />;
   }
-
+*/
   // Only render the main content after loading is complete
   return (
     <>
-      <Toaster />
+     
       <BrowserRouter>
         <Routes>
           <Route index element={<Home />} />
@@ -36,7 +36,7 @@ function App() {
       </BrowserRouter>
     </>
   );
-  */
+  
 }
 
 export default App;
