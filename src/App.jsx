@@ -17,12 +17,11 @@ function App() {
     return () => clearTimeout(timer);
   }, []);
 
-  // Only render the loading screen while loading is true
   if (loading) {
     return <LoadingScreen />;
   }
 
-  // Only render the main content after loading is complete
+
   return (
     <>
       <Toaster />
