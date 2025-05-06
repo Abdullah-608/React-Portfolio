@@ -142,3 +142,5 @@ function useToast() {
 }
 
 export { useToast, toast };
+
+//made a hook to manage the state of the toast notifications
