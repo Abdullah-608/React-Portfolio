@@ -42,32 +42,26 @@
 }
 
 @layer base {
-  :root {
-    /* Crystal Light Theme */
-    --background: 200 100% 97%; /* Icy white-blue */
-    --foreground: 218 22% 20%; /* Muted dark for contrast */
+:root {
+  /* Neon Desert Light */
+  --background: 240 100% 10%;          /* Deep midnight blue */
+  --foreground: 160 100% 85%;          /* Neon green text */
+  --card: 240 100% 15%;                /* Dark slate with glow contrast */
+  --primary: 200 100% 60%;             /* Electric blue (main neon) */
+  --primary-foreground: 0 0% 100%;     /* Bright white */
+  --border: 280 100% 75%;              /* Neon pink border */
+}
 
-    --card: 0 0% 100%; /* Frosted white */
 
-    --primary: 190 100% 50%; /* Cyan-blue crystal */
-    --primary-foreground: 0 0% 100%; /* Pure white text */
-
-    --border: 198 60% 85%; /* Pale blue border */
-  }
-
-  .dark {
-    /* Star Wars Dark Theme */
-    --background: 222 47% 5%; /* Space black */
-    --foreground: 214 32% 90%; /* Silvery text */
-
-    --card: 223 30% 10%; /* Slightly raised dark gray */
-
-    --primary: 265 80% 65%; /* Lightsaber purple */
-    --primary-foreground: 222 47% 5%; /* Dark base text on bright btn */
-
-    --border: 230 20% 30%; /* Smoky blue-gray border */
-  }
-
+.dark {
+  /* Desert Night */
+   --background: 240 60% 5%; /* Midnight black */
+  --foreground: 45 20% 90%; /* Desert moonlight */
+  --card: 30 25% 15%; /* Slightly lighter sand */
+  --primary: 20 80% 50%; /* Desert sunset */
+  --primary-foreground: 0 0% 100%; /* White */
+  --border: 35 40% 30%; /* Rich clay border */
+}
   * {
     @apply border-border;
   }
@@ -133,15 +127,12 @@
 }
 /* Theme Toggle Animations */
 
-
-
-
 html.dark .theme-toggle-ripple {
-  background-color: rgba(30, 41, 59, 0.7); /* slate-800 with opacity */
+  background-color: rgba(20, 30, 45, 0.7); /* Improved slate-dark with opacity */
 }
 
 html:not(.dark) .theme-toggle-ripple {
-  background-color: rgba(255, 255, 255, 0.7); /* white with opacity */
+  background-color: rgba(240, 248, 255, 0.7); /* Slight blue tint to white with opacity */
 }
 
 .theme-toggle-button {
@@ -167,13 +158,7 @@ html:not(.dark) .theme-toggle-ripple {
   animation: rotateIn 0.3s forwards;
 }
 
-
-
-
-
 /* Ray animations */
-
-
 
 .stars-container, .rays-container {
   animation: fadeIn 0.3s forwards;

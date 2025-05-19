@@ -32,6 +32,7 @@ const TextScrambler = ({ text }) => {
   
   return <span>{output}</span>;
 };
+
 // Enhanced typing effect for roles
 const TypeWriter = () => {
   const roles = ["I am a Web Developer", "I am a Freelancer", "I am a Computer Scientist", "I am an App Developer"];
@@ -80,6 +81,9 @@ const TypeWriter = () => {
 };
 
 export const HeroSection = () => {
+  // Fix for image not displaying
+  const profileImageUrl = "/projects/pic.png"; // Update this to the correct path
+  
   return (
     <section
       id="hero"
@@ -95,35 +99,54 @@ export const HeroSection = () => {
         <div className="flex flex-col md:flex-row items-center justify-between gap-8">
           {/* Text content - left side */}
           <div className="text-center md:text-left space-y-8 md:w-3/5">
-            <h1 className="text-5xl md:text-7xl font-bold tracking-tight">
-              <span className="opacity-0 animate-fade-in">What’s up? I’m </span>
-              <span className="text-primary opacity-0 animate-fade-in-delay-1 block md:inline-block">
-                {" "}
-                <TextScrambler text="Abdullah" />
-              </span>
-              <span className="text-gradient opacity-0 animate-fade-in-delay-2 block md:inline-block md:ml-2">
-                {" "}
-                <TextScrambler text="Mansoor" />
-              </span>
-            </h1>
-
-            
-            <div className="text-xl md:text-2xl font-medium opacity-0 animate-fade-in-delay-3">
-            <TypeWriter />
+            <div className="space-y-2">
+             
+              
+              <h1 className="text-5xl md:text-7xl font-bold tracking-tight">
+                <span className="block">What's up? I'm </span>
+                <span className="text-primary block md:inline-block">
+                  <TextScrambler text="Abdullah" />
+                </span>
+                <span className="bg-clip-text text-transparent bg-gradient-to-r from-primary to-primary/70 block md:inline-block md:ml-2">
+                  <TextScrambler text="Mansoor" />
+                </span>
+              </h1>
             </div>
 
-            <div className="pt-6 flex flex-col sm:flex-row gap-4 justify-center md:justify-start opacity-0 animate-fade-in-delay-4">
-              <a href="#projects" className="cosmic-button shadow-lg hover:shadow-primary/20 transform hover:-translate-y-1 transition-all duration-300">
+            <div className="text-xl md:text-2xl font-medium">
+              <TypeWriter />
+            </div>
+          
+
+            <div className="pt-6 flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
+              <a 
+                href="#projects" 
+                className="cosmic-button shadow-lg hover:shadow-primary/20 transform hover:-translate-y-1 transition-all duration-300"
+              >
                 View My Work
               </a>
-              <a href="#contact" className="px-6 py-2 rounded-full border-2 border-primary/30 text-primary hover:bg-primary/10 hover:border-primary transition-colors duration-300 flex items-center justify-center gap-2">
+              <a 
+                href="#contact" 
+                className="px-6 py-2 rounded-full border-2 border-primary/30 text-primary hover:bg-primary/10 hover:border-primary transition-colors duration-300 flex items-center justify-center gap-2"
+              >
                 <span>Contact Me</span>
               </a>
+              <a 
+                href="/public/projects/CV.pdf" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="px-6 py-2 flex items-center justify-center gap-2 text-muted-foreground hover:text-foreground transition-colors duration-300"
+              >
+                <Download size={16} />
+                <span>Resume</span>
+              </a>
             </div>
+            
+            
           </div>
           
           {/* Profile picture - right side with enhanced styling */}
-          <div className="md:w-2/5 flex justify-center opacity-0 animate-fade-in-delay-3">
+          <div className="md:w-2/5 flex justify-center">
             <div className="relative group">
               {/* Decorative ring */}
               <div className="absolute inset-0 rounded-full border-2 border-dashed border-primary/30 animate-spin-slow"></div>
@@ -132,9 +155,13 @@ export const HeroSection = () => {
               <div className="w-64 h-64 md:w-80 md:h-80 rounded-full overflow-hidden border-4 border-primary/20 shadow-2xl transform group-hover:scale-105 transition-transform duration-500 relative z-10">
                 <div className="absolute inset-0 bg-gradient-to-tr from-primary/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                 <img 
-                  src="/public/projects/pic.png" 
+                  src={profileImageUrl}
                   alt="Abdullah Mansoor" 
                   className="w-full h-full object-cover"
+                  onError={(e) => {
+                    // Fallback in case image doesn't load
+                    e.target.src = "https://via.placeholder.com/400x400.png?text=Abdullah+Mansoor";
+                  }}
                 />
               </div>
             </div>
@@ -146,6 +173,17 @@ export const HeroSection = () => {
         <span className="text-sm text-muted-foreground mb-2 font-medium">Scroll Down</span>
         <ArrowDown className="h-5 w-5 text-primary" />
       </div>
+      
+      {/* Custom animation for spin-slow */}
+      <style jsx>{`
+        @keyframes spin-slow {
+          0% { transform: rotate(0deg); }
+          100% { transform: rotate(360deg); }
+        }
+        .animate-spin-slow {
+          animation: spin-slow 20s linear infinite;
+        }
+      `}</style>
     </section>
   );
 };
