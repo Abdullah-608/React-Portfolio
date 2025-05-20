@@ -470,19 +470,19 @@ export const ProjectsSection = () => {
                   
                   {/* View details button (only visible on hover) */}
                   <div className={cn(
-                    "absolute inset-0 bg-black/60 flex items-center justify-center transition-opacity duration-300",
-                    hoveredProject === project.id ? "opacity-100" : "opacity-0 pointer-events-none"
-                  )}>
-                    <a
-                      href={project.html_url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="px-6 py-3 bg-primary text-primary-foreground rounded-full flex items-center gap-2 hover:bg-primary/90 transition-all transform hover:scale-105"
-                    >
-                      <Eye size={18} />
-                      View Project
-                    </a>
-                  </div>
+  "absolute inset-0 bg-black/60 flex items-center justify-center transition-opacity duration-300 z-50",
+  hoveredProject === project.id ? "opacity-100" : "opacity-0 pointer-events-none"
+)}>
+  <a
+    href={project.html_url}
+    target="_blank"
+    rel="noopener noreferrer"
+    className="px-6 py-3 bg-primary text-primary-foreground rounded-full flex items-center gap-2 hover:bg-primary/90 transition-all transform hover:scale-105"
+  >
+    <Eye size={18} />
+    View Project
+  </a>
+</div>
                 </motion.div>
               ))}
             </motion.div>
