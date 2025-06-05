@@ -124,9 +124,6 @@ const categories = ["All", "Programming Language","Frontend", "Backend", "Tools"
 export const SkillsSection = () => {
   const [activeCategory, setActiveCategory] = useState("All");
   const [selectedSkill, setSelectedSkill] = useState(null);
-  const [isGridView, setIsGridView] = useState(true);
-  
-  // Track if the component is mounted
   const [mounted, setMounted] = useState(false);
   const sectionRef = useRef(null);
   
@@ -157,6 +154,10 @@ export const SkillsSection = () => {
   
   // Sort skills by level (highest first)
   const sortedSkills = [...filteredSkills].sort((a, b) => b.level - a.level);
+  
+  // Split skills into two arrays for the two scrolling rows
+  const firstRowSkills = [...sortedSkills];
+  const secondRowSkills = [...sortedSkills]; // Duplicate to ensure we have enough for both rows
   
   const handleSkillClick = (skill) => {
     setSelectedSkill(selectedSkill?.name === skill.name ? null : skill);
@@ -213,29 +214,6 @@ export const SkillsSection = () => {
           <h2 className="text-3xl md:text-5xl font-bold text-center md:text-left" data-aos="fade-right">
             My <span className="bg-clip-text text-transparent bg-gradient-to-r from-primary to-primary/70">Technical Skills</span>
           </h2>
-          
-          <div className="flex items-center gap-4 mt-6 md:mt-0" data-aos="fade-left">
-            <button 
-              onClick={() => setIsGridView(true)}
-              className={cn(
-                "p-2 rounded-md transition-all",
-                isGridView ? "bg-primary text-primary-foreground" : "bg-card hover:bg-card/80"
-              )}
-              aria-label="Grid view"
-            >
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
-            </button>
-            <button 
-              onClick={() => setIsGridView(false)}
-              className={cn(
-                "p-2 rounded-md transition-all",
-                !isGridView ? "bg-primary text-primary-foreground" : "bg-card hover:bg-card/80"
-              )}
-              aria-label="List view"
-            >
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
-            </button>
-          </div>
         </div>
 
         <div className="flex flex-wrap justify-center md:justify-start gap-4 mb-16" data-aos="fade-up">
@@ -256,126 +234,37 @@ export const SkillsSection = () => {
           ))}
         </div>
 
-        <AnimatePresence mode="wait">
-          {isGridView ? (
-            <motion.div 
-              key="grid-view"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
-              transition={{ duration: 0.5 }}
-              className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
-            >
-              {sortedSkills.map((skill, index) => (
-                <motion.div
-                  layout
-                  key={skill.name}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: 20 }}
-                  transition={{ duration: 0.3, delay: index * 0.05 }}
-                  className={cn(
-                    "bg-card border rounded-xl overflow-hidden shadow-md transition-all duration-300",
-                    "hover:shadow-lg hover:shadow-primary/5 hover:-translate-y-1",
-                    getCategoryStyle(skill.category),
-                    selectedSkill?.name === skill.name ? "ring-2 ring-primary ring-offset-2 ring-offset-background" : ""
-                  )}
-                  onClick={() => handleSkillClick(skill)}
-                >
-                  <div className="p-6">
-                    <div className="flex items-start justify-between mb-3">
-                      <div className="flex items-center">
-                        <i className={`${skill.icon} text-2xl mr-3 text-primary/80`}></i>
-                        <h3 className="font-bold text-lg">{skill.name}</h3>
-                      </div>
-                      <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-secondary">
-                        {getMasteryLevel(skill.level)}
-                      </span>
-                    </div>
-                    
-                    <div className="relative w-full h-2.5 rounded-full overflow-hidden bg-secondary/50 mb-2">
-                      <motion.div
-                        initial={{ width: 0 }}
-                        animate={{ width: `${skill.level}%` }}
-                        transition={{ duration: 1.5, ease: "easeOut", delay: 0.2 }}
-                        className={`absolute top-0 left-0 h-full rounded-full bg-gradient-to-r ${getProgressColor(skill.level)}`}
-                      />
-                    </div>
-                    
-                    <div className="flex justify-between items-center">
-                      <span className="text-xs font-medium text-muted-foreground">
-                        {skill.category}
-                      </span>
-                      <span className="text-sm font-semibold">
-                        {skill.level}%
-                      </span>
-                    </div>
-                    
-                    <AnimatePresence>
-                      {selectedSkill?.name === skill.name && (
-                        <motion.div 
-                          initial={{ opacity: 0, height: 0 }}
-                          animate={{ opacity: 1, height: "auto" }}
-                          exit={{ opacity: 0, height: 0 }}
-                          transition={{ duration: 0.3 }}
-                          className="mt-4 text-sm text-muted-foreground border-t border-border pt-3"
-                        >
-                          <p>{skill.description}</p>
-                        </motion.div>
-                      )}
-                    </AnimatePresence>
-                  </div>
-                </motion.div>
-              ))}
-            </motion.div>
-          ) : (
-            <motion.div 
-              key="list-view"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
-              transition={{ duration: 0.5 }}
-              className="space-y-4"
-            >
-              {sortedSkills.map((skill, index) => (
-                <motion.div
-                  layout
-                  key={skill.name}
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  exit={{ opacity: 0, x: -20 }}
-                  transition={{ duration: 0.3, delay: index * 0.05 }}
-                  className={cn(
-                    "bg-card border p-5 rounded-lg overflow-hidden shadow-sm transition-all duration-300",
-                    "hover:shadow-md hover:border-primary/30",
-                    getCategoryStyle(skill.category),
-                    selectedSkill?.name === skill.name ? "ring-2 ring-primary" : ""
-                  )}
-                  onClick={() => handleSkillClick(skill)}
-                >
-                  <div className="flex flex-wrap md:flex-nowrap items-center gap-4">
-                    <div className="flex items-center shrink-0">
-                      <div className="w-12 h-12 rounded-lg flex items-center justify-center bg-primary/10 text-primary">
-                        <i className={`${skill.icon} text-2xl`}></i>
-                      </div>
-                    </div>
-                    
-                    <div className="flex-grow">
-                      <div className="flex flex-wrap justify-between items-center mb-2">
-                        <div className="flex items-center gap-2">
+        {/* Scrolling skills rows */}
+        <div className="mb-16 overflow-hidden" data-aos="fade-up">
+          {/* First row - scrolling right */}
+          <div className="relative mb-8 py-4">
+            <div className="skills-scroll-container skills-scroll-right">
+              <div className="skills-scroll-content">
+                {firstRowSkills.map((skill) => (
+                  <div
+                    key={`row1-${skill.name}`}
+                    className={cn(
+                      "skills-card bg-card border rounded-xl overflow-hidden shadow-md transition-all duration-300 mx-4",
+                      "hover:shadow-lg hover:shadow-primary/5 hover:-translate-y-1",
+                      getCategoryStyle(skill.category),
+                      selectedSkill?.name === skill.name ? "ring-2 ring-primary" : ""
+                    )}
+                    onClick={() => handleSkillClick(skill)}
+                  >
+                    <div className="p-5">
+                      <div className="flex items-start justify-between mb-3">
+                        <div className="flex items-center">
+                          <i className={`${skill.icon} text-2xl mr-3 text-primary/80`}></i>
                           <h3 className="font-bold text-lg">{skill.name}</h3>
-                          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-secondary">
-                            {getMasteryLevel(skill.level)}
-                          </span>
                         </div>
-                        <span className="text-sm font-semibold">{skill.level}%</span>
+                        <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-secondary">
+                          {getMasteryLevel(skill.level)}
+                        </span>
                       </div>
                       
                       <div className="relative w-full h-2.5 rounded-full overflow-hidden bg-secondary/50 mb-2">
-                        <motion.div
-                          initial={{ width: 0 }}
-                          animate={{ width: `${skill.level}%` }}
-                          transition={{ duration: 1.5, ease: "easeOut", delay: 0.2 }}
+                        <div
+                          style={{ width: `${skill.level}%` }}
                           className={`absolute top-0 left-0 h-full rounded-full bg-gradient-to-r ${getProgressColor(skill.level)}`}
                         />
                       </div>
@@ -384,59 +273,255 @@ export const SkillsSection = () => {
                         <span className="text-xs font-medium text-muted-foreground">
                           {skill.category}
                         </span>
-                        <button className="text-xs text-primary hover:underline" onClick={(e) => {
-                          e.stopPropagation();
-                          handleSkillClick(skill);
-                        }}>
-                          {selectedSkill?.name === skill.name ? "Hide details" : "Show details"}
-                        </button>
+                        <span className="text-sm font-semibold">
+                          {skill.level}%
+                        </span>
                       </div>
                     </div>
                   </div>
-                  
-                  <AnimatePresence>
-                    {selectedSkill?.name === skill.name && (
-                      <motion.div 
-                        initial={{ opacity: 0, height: 0 }}
-                        animate={{ opacity: 1, height: "auto" }}
-                        exit={{ opacity: 0, height: 0 }}
-                        transition={{ duration: 0.3 }}
-                        className="mt-4 text-sm text-muted-foreground border-t border-border pt-3"
-                      >
-                        <p>{skill.description}</p>
-                      </motion.div>
+                ))}
+                
+                {/* Duplicate skills to ensure continuous scrolling */}
+                {firstRowSkills.map((skill) => (
+                  <div
+                    key={`row1-dupe-${skill.name}`}
+                    className={cn(
+                      "skills-card bg-card border rounded-xl overflow-hidden shadow-md transition-all duration-300 mx-4",
+                      "hover:shadow-lg hover:shadow-primary/5 hover:-translate-y-1",
+                      getCategoryStyle(skill.category)
                     )}
-                  </AnimatePresence>
-                </motion.div>
-              ))}
+                    onClick={() => handleSkillClick(skill)}
+                  >
+                    <div className="p-5">
+                      <div className="flex items-start justify-between mb-3">
+                        <div className="flex items-center">
+                          <i className={`${skill.icon} text-2xl mr-3 text-primary/80`}></i>
+                          <h3 className="font-bold text-lg">{skill.name}</h3>
+                        </div>
+                        <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-secondary">
+                          {getMasteryLevel(skill.level)}
+                        </span>
+                      </div>
+                      
+                      <div className="relative w-full h-2.5 rounded-full overflow-hidden bg-secondary/50 mb-2">
+                        <div
+                          style={{ width: `${skill.level}%` }}
+                          className={`absolute top-0 left-0 h-full rounded-full bg-gradient-to-r ${getProgressColor(skill.level)}`}
+                        />
+                      </div>
+                      
+                      <div className="flex justify-between items-center">
+                        <span className="text-xs font-medium text-muted-foreground">
+                          {skill.category}
+                        </span>
+                        <span className="text-sm font-semibold">
+                          {skill.level}%
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+          
+          {/* Second row - scrolling left */}
+          <div className="relative py-4">
+            <div className="skills-scroll-container skills-scroll-left">
+              <div className="skills-scroll-content">
+                {secondRowSkills.map((skill) => (
+                  <div
+                    key={`row2-${skill.name}`}
+                    className={cn(
+                      "skills-card bg-card border rounded-xl overflow-hidden shadow-md transition-all duration-300 mx-4",
+                      "hover:shadow-lg hover:shadow-primary/5 hover:-translate-y-1",
+                      getCategoryStyle(skill.category),
+                      selectedSkill?.name === skill.name ? "ring-2 ring-primary" : ""
+                    )}
+                    onClick={() => handleSkillClick(skill)}
+                  >
+                    <div className="p-5">
+                      <div className="flex items-start justify-between mb-3">
+                        <div className="flex items-center">
+                          <i className={`${skill.icon} text-2xl mr-3 text-primary/80`}></i>
+                          <h3 className="font-bold text-lg">{skill.name}</h3>
+                        </div>
+                        <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-secondary">
+                          {getMasteryLevel(skill.level)}
+                        </span>
+                      </div>
+                      
+                      <div className="relative w-full h-2.5 rounded-full overflow-hidden bg-secondary/50 mb-2">
+                        <div
+                          style={{ width: `${skill.level}%` }}
+                          className={`absolute top-0 left-0 h-full rounded-full bg-gradient-to-r ${getProgressColor(skill.level)}`}
+                        />
+                      </div>
+                      
+                      <div className="flex justify-between items-center">
+                        <span className="text-xs font-medium text-muted-foreground">
+                          {skill.category}
+                        </span>
+                        <span className="text-sm font-semibold">
+                          {skill.level}%
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+                
+                {/* Duplicate skills to ensure continuous scrolling */}
+                {secondRowSkills.map((skill) => (
+                  <div
+                    key={`row2-dupe-${skill.name}`}
+                    className={cn(
+                      "skills-card bg-card border rounded-xl overflow-hidden shadow-md transition-all duration-300 mx-4",
+                      "hover:shadow-lg hover:shadow-primary/5 hover:-translate-y-1",
+                      getCategoryStyle(skill.category)
+                    )}
+                    onClick={() => handleSkillClick(skill)}
+                  >
+                    <div className="p-5">
+                      <div className="flex items-start justify-between mb-3">
+                        <div className="flex items-center">
+                          <i className={`${skill.icon} text-2xl mr-3 text-primary/80`}></i>
+                          <h3 className="font-bold text-lg">{skill.name}</h3>
+                        </div>
+                        <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-secondary">
+                          {getMasteryLevel(skill.level)}
+                        </span>
+                      </div>
+                      
+                      <div className="relative w-full h-2.5 rounded-full overflow-hidden bg-secondary/50 mb-2">
+                        <div
+                          style={{ width: `${skill.level}%` }}
+                          className={`absolute top-0 left-0 h-full rounded-full bg-gradient-to-r ${getProgressColor(skill.level)}`}
+                        />
+                      </div>
+                      
+                      <div className="flex justify-between items-center">
+                        <span className="text-xs font-medium text-muted-foreground">
+                          {skill.category}
+                        </span>
+                        <span className="text-sm font-semibold">
+                          {skill.level}%
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Skill details modal */}
+        <AnimatePresence>
+          {selectedSkill && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="fixed inset-0 bg-background/80 backdrop-blur-sm z-50 flex items-center justify-center"
+              onClick={() => setSelectedSkill(null)}
+            >
+              <motion.div
+                initial={{ scale: 0.9, y: 20 }}
+                animate={{ scale: 1, y: 0 }}
+                exit={{ scale: 0.9, y: 20 }}
+                className="bg-card border rounded-xl p-6 max-w-md w-full mx-4 shadow-lg"
+                onClick={(e) => e.stopPropagation()}
+              >
+                <div className="flex items-center gap-4 mb-4">
+                  <div className="w-16 h-16 rounded-lg flex items-center justify-center bg-primary/10">
+                    <i className={`${selectedSkill.icon} text-4xl text-primary`}></i>
+                  </div>
+                  <div>
+                    <h3 className="text-2xl font-bold">{selectedSkill.name}</h3>
+                    <div className="flex items-center gap-2">
+                      <span className="text-sm font-medium text-muted-foreground">
+                        {selectedSkill.category}
+                      </span>
+                      <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-secondary">
+                        {getMasteryLevel(selectedSkill.level)}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+                
+                <div className="relative w-full h-3 rounded-full overflow-hidden bg-secondary/50 mb-3">
+                  <div
+                    style={{ width: `${selectedSkill.level}%` }}
+                    className={`absolute top-0 left-0 h-full rounded-full bg-gradient-to-r ${getProgressColor(selectedSkill.level)}`}
+                  />
+                </div>
+                
+                <div className="text-right mb-4">
+                  <span className="text-lg font-bold">{selectedSkill.level}%</span>
+                </div>
+                
+                <div className="border-t border-border pt-4">
+                  <h4 className="font-medium mb-2">Description</h4>
+                  <p className="text-muted-foreground">{selectedSkill.description}</p>
+                </div>
+                
+                <button
+                  className="mt-6 w-full py-2 rounded-md border border-border hover:bg-secondary transition-colors"
+                  onClick={() => setSelectedSkill(null)}
+                >
+                  Close
+                </button>
+              </motion.div>
             </motion.div>
           )}
         </AnimatePresence>
 
-        {/* Summary section */}
-        <div className="mt-16 bg-card border rounded-xl p-6 shadow-sm" data-aos="fade-up">
-          <h3 className="text-xl font-semibold mb-4">Skills Summary</h3>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
-            {categories.filter(cat => cat !== "All").map((category) => {
-              const categorySkills = skills.filter(skill => skill.category === category);
-              const avgLevel = Math.round(categorySkills.reduce((sum, skill) => sum + skill.level, 0) / categorySkills.length);
-              
-              return (
-                <div key={category} className="p-4 rounded-lg bg-secondary/20 border border-border">
-                  <h4 className="font-medium text-sm text-muted-foreground mb-1">{category}</h4>
-                  <p className="text-2xl font-bold">
-                    {avgLevel}
-                    <span className="text-sm text-muted-foreground font-normal"> / 100</span>
-                  </p>
-                  <div className="mt-2 text-sm text-muted-foreground">
-                    {categorySkills.length} skills
-                  </div>
-                </div>
-              );
-            })}
-          </div>
+        
         </div>
-      </div>
+
+      {/* CSS for scrolling animations */}
+      <style jsx>{`
+        .skills-scroll-container {
+          width: 100%;
+          overflow: hidden;
+          position: relative;
+        }
+        
+        .skills-scroll-content {
+          display: flex;
+          width: fit-content;
+        }
+        
+        .skills-card {
+          flex: 0 0 auto;
+          width: 280px;
+        }
+        
+        /* Animation for right scrolling */
+        .skills-scroll-right .skills-scroll-content {
+          animation: scrollRight 60s linear infinite;
+        }
+        
+        /* Animation for left scrolling */
+        .skills-scroll-left .skills-scroll-content {
+          animation: scrollLeft 60s linear infinite;
+        }
+        
+        @keyframes scrollRight {
+          0% { transform: translateX(0); }
+          100% { transform: translateX(-50%); }
+        }
+        
+        @keyframes scrollLeft {
+          0% { transform: translateX(-50%); }
+          100% { transform: translateX(0); }
+        }
+        
+        /* Pause animations on hover */
+        .skills-scroll-container:hover .skills-scroll-content {
+          animation-play-state: paused;
+        }
+      `}</style>
     </section>
   );
 };

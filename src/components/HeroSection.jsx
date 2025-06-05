@@ -1,7 +1,7 @@
 import { ArrowDown, Download } from "lucide-react";
 import { useState, useEffect } from "react";
 
-// Text scrambler effect with enhanced animation speed
+// Refined text scrambler with controlled animation speed
 const TextScrambler = ({ text }) => {
   const [output, setOutput] = useState("");
   const chars = "!<>-_\\/[]{}—=+*^?#________";
@@ -33,9 +33,14 @@ const TextScrambler = ({ text }) => {
   return <span>{output}</span>;
 };
 
-// Enhanced typing effect for roles
+// Optimized typing effect for roles
 const TypeWriter = () => {
-  const roles = ["I am a Web Developer", "I am a Freelancer", "I am a Computer Scientist", "I am an App Developer"];
+  const roles = [
+    "Full-Stack Developer", 
+    "Software Engineer", 
+    "Computer Scientist", 
+    "Mobile App Developer"
+  ];
   const [displayText, setDisplayText] = useState("");
   const [isDeleting, setIsDeleting] = useState(false);
   const [roleIndex, setRoleIndex] = useState(0);
@@ -45,23 +50,18 @@ const TypeWriter = () => {
     const currentRole = roles[roleIndex];
     
     const timer = setTimeout(() => {
-      // If currently adding characters
       if (!isDeleting) {
         setDisplayText(currentRole.substring(0, displayText.length + 1));
         setDelay(100);
         
-        // If completed typing the current role
         if (displayText === currentRole) {
-          setDelay(2000); // Pause at the end
+          setDelay(2000);
           setIsDeleting(true);
         }
-      } 
-      // If currently deleting characters
-      else {
+      } else {
         setDisplayText(currentRole.substring(0, displayText.length - 1));
         setDelay(50);
         
-        // If deleted all characters
         if (displayText === "") {
           setIsDeleting(false);
           setRoleIndex((roleIndex + 1) % roles.length);
@@ -81,29 +81,28 @@ const TypeWriter = () => {
 };
 
 export const HeroSection = () => {
-  // Fix for image not displaying
-  const profileImageUrl = "/projects/pic.png"; // Update this to the correct path
+  const profileImageUrl = "/projects/pic.jpg";
   
   return (
     <section
       id="hero"
-      className="relative min-h-screen flex flex-col items-center justify-center px-4 overflow-hidden"
+      className="relative min-h-screen flex flex-col items-center justify-center px-4 sm:px-6 overflow-hidden "
     >
-      {/* Decorative background elements */}
+      {/* Subtle background elements */}
       <div className="absolute inset-0 -z-10">
-        <div className="absolute top-20 right-10 w-72 h-72 bg-primary/5 rounded-full blur-3xl"></div>
-        <div className="absolute bottom-10 left-10 w-80 h-80 bg-primary/10 rounded-full blur-3xl"></div>
+        <div className="absolute top-1/4 right-1/4 w-72 h-72 bg-primary/5 rounded-full blur-3xl"></div>
+        <div className="absolute bottom-1/3 left-1/4 w-80 h-80 bg-primary/5 rounded-full blur-3xl"></div>
       </div>
       
       <div className="container max-w-6xl mx-auto z-10">
-        <div className="flex flex-col md:flex-row items-center justify-between gap-8">
+        <div className="flex flex-col-reverse md:flex-row items-center justify-between gap-8 lg:gap-12">
           {/* Text content - left side */}
-          <div className="text-center md:text-left space-y-8 md:w-3/5">
+          <div className="text-center md:text-left space-y-6 md:space-y-8 md:w-3/5 mt-8 md:mt-0">
             <div className="space-y-2">
-             
-              
-              <h1 className="text-5xl md:text-7xl font-bold tracking-tight">
-                <span className="block">What's up? I'm </span>
+              <h2 className="text-xl md:text-2xl font-medium text-muted-foreground mb-2">
+                Hello, I'm
+              </h2>
+              <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight">
                 <span className="text-primary block md:inline-block">
                   <TextScrambler text="Abdullah" />
                 </span>
@@ -113,21 +112,25 @@ export const HeroSection = () => {
               </h1>
             </div>
 
-            <div className="text-xl md:text-2xl font-medium">
+            <div className="text-xl md:text-2xl font-medium min-h-[2.5rem]">
               <TypeWriter />
             </div>
+            
+            <p className="text-muted-foreground max-w-lg mx-auto md:mx-0">
+              Creating elegant, high-performance solutions with modern technologies.
+              Focused on delivering exceptional user experiences through clean code.
+            </p>
           
-
-            <div className="pt-6 flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
+            <div className="pt-4 md:pt-6 flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
               <a 
                 href="#projects" 
-                className="cosmic-button shadow-lg hover:shadow-primary/20 transform hover:-translate-y-1 transition-all duration-300"
+                className="px-6 py-3 rounded-md bg-primary text-primary-foreground hover:bg-primary/90 shadow-md hover:shadow-lg transition-all duration-300"
               >
-                View My Work
+                View My Portfolio
               </a>
               <a 
                 href="#contact" 
-                className="px-6 py-2 rounded-full border-2 border-primary/30 text-primary hover:bg-primary/10 hover:border-primary transition-colors duration-300 flex items-center justify-center gap-2"
+                className="px-6 py-3 rounded-md border-2 border-primary/30 text-primary hover:bg-primary/5 hover:border-primary transition-colors duration-300 flex items-center justify-center gap-2"
               >
                 <span>Contact Me</span>
               </a>
@@ -135,31 +138,31 @@ export const HeroSection = () => {
                 href="/public/projects/CV.pdf" 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="px-6 py-2 flex items-center justify-center gap-2 text-muted-foreground hover:text-foreground transition-colors duration-300"
+                className="px-6 py-3 flex items-center justify-center gap-2 text-muted-foreground hover:text-foreground transition-colors duration-300"
               >
                 <Download size={16} />
-                <span>Resume</span>
+                <span>Download Resume</span>
               </a>
             </div>
-            
-            
           </div>
           
-          {/* Profile picture - right side with enhanced styling */}
+          {/* Professional profile picture - right side */}
           <div className="md:w-2/5 flex justify-center">
-            <div className="relative group">
-              {/* Decorative ring */}
-              <div className="absolute inset-0 rounded-full border-2 border-dashed border-primary/30 animate-spin-slow"></div>
+            <div className="relative">
+              {/* Subtle decorative ring */}
+              <div className="absolute inset-0 -m-4 sm:-m-6 md:-m-8 rounded-full border-[2px] border-dashed border-primary/20 animate-spin-slow"></div>
               
-              {/* Profile image container */}
-              <div className="w-64 h-64 md:w-80 md:h-80 rounded-full overflow-hidden border-4 border-primary/20 shadow-2xl transform group-hover:scale-105 transition-transform duration-500 relative z-10">
-                <div className="absolute inset-0 bg-gradient-to-tr from-primary/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+              {/* Profile image container with elegant border */}
+              <div className="w-56 h-56 sm:w-64 sm:h-64 md:w-72 md:h-72 lg:w-80 lg:h-80 rounded-full overflow-hidden 
+                          border-[4px] border-primary/10 shadow-xl
+                          transform hover:scale-[1.02] transition-transform duration-500 relative z-10">
+                <div className="absolute inset-0 bg-gradient-to-tr from-primary/10 to-transparent 
+                             opacity-0 hover:opacity-100 transition-opacity duration-300"></div>
                 <img 
                   src={profileImageUrl}
                   alt="Abdullah Mansoor" 
                   className="w-full h-full object-cover"
                   onError={(e) => {
-                    // Fallback in case image doesn't load
                     e.target.src = "https://via.placeholder.com/400x400.png?text=Abdullah+Mansoor";
                   }}
                 />
@@ -170,18 +173,18 @@ export const HeroSection = () => {
       </div>
 
       <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex flex-col items-center animate-bounce">
-        <span className="text-sm text-muted-foreground mb-2 font-medium">Scroll Down</span>
+        <span className="text-sm text-muted-foreground mb-2 font-medium">Explore More</span>
         <ArrowDown className="h-5 w-5 text-primary" />
       </div>
       
-      {/* Custom animation for spin-slow */}
+      {/* Optimized animations */}
       <style jsx>{`
         @keyframes spin-slow {
           0% { transform: rotate(0deg); }
           100% { transform: rotate(360deg); }
         }
         .animate-spin-slow {
-          animation: spin-slow 20s linear infinite;
+          animation: spin-slow 30s linear infinite;
         }
       `}</style>
     </section>

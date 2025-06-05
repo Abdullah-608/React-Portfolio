@@ -1,8 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { motion, useInView, useAnimation, AnimatePresence } from "framer-motion";
 import { 
-  Briefcase, 
-  Code, 
   Download, 
   User, 
   Github, 
@@ -10,9 +8,7 @@ import {
   Zap, 
   BookOpen,
   Smile,
-  Clock,
-  ChevronRight,
-  Heart
+  Clock
 } from "lucide-react";
 
 // Custom hook for counting up numbers
@@ -61,54 +57,6 @@ const useCountUp = (end, start = 0, duration = 2000) => {
   }, [end, start, duration, isInView]);
 
   return { count, ref: countRef };
-};
-
-// Card component with hover effects
-const FeatureCard = ({ icon: Icon, title, description, delay, color = "primary" }) => {
-  return (
-    <motion.div 
-      className={`gradient-border p-7 rounded-xl overflow-hidden bg-card/30 backdrop-blur-sm
-                relative group cursor-pointer transition-all duration-500 h-full`}
-      initial={{ opacity: 0, y: 30 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.5, delay }}
-      whileHover={{ 
-        y: -10,
-        boxShadow: "0 15px 30px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)"
-      }}
-    >
-      {/* Background glow effect */}
-      <div className={`absolute inset-0 bg-gradient-to-r from-${color}/10 to-transparent 
-                      opacity-0 group-hover:opacity-100 transition-opacity duration-700`}></div>
-      
-      <div className="flex flex-col space-y-4 relative z-10">
-        <div className={`p-3 rounded-xl bg-${color}/10 shadow-inner border border-${color}/20
-                       group-hover:bg-${color}/20 transition-colors duration-300 self-start`}>
-          <Icon className={`h-7 w-7 text-${color}`} />
-        </div>
-        
-        <div className="text-left">
-          <h4 className={`font-semibold text-lg text-${color}/90 group-hover:text-${color} 
-                         transition-colors duration-300 flex items-center mb-2`}>
-            {title}
-            <motion.div
-              initial={{ width: 0, opacity: 0 }}
-              whileHover={{ width: "auto", opacity: 1 }}
-              transition={{ duration: 0.3 }}
-              className="overflow-hidden"
-            >
-              <ChevronRight className="h-4 w-0 group-hover:w-4 ml-0 group-hover:ml-1 opacity-0 group-hover:opacity-100 transition-all duration-300" />
-            </motion.div>
-          </h4>
-          
-          <p className="text-muted-foreground group-hover:text-foreground/80 transition-colors duration-300">
-            {description}
-          </p>
-        </div>
-      </div>
-    </motion.div>
-  );
 };
 
 // Stats counter card
@@ -225,62 +173,11 @@ export const AboutSection = () => {
         </div>
       </motion.div>
     ),
-    
-    interests: (
-      <motion.div 
-        className="space-y-6"
-        initial={{ opacity: 0, x: -10 }}
-        animate={{ opacity: 1, x: 0 }}
-        exit={{ opacity: 0, x: 10 }}
-        transition={{ duration: 0.3 }}
-      >
-        <h3 className="text-2xl font-semibold text-primary/90 mb-6">
-          What I'm Passionate About
-        </h3>
-        
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {[
-            { 
-              title: "Web Development", 
-              icon: Code, 
-              description: "Creating beautiful, functional interfaces that leave an impression" 
-            },
-            { 
-              title: "Mobile Apps", 
-              icon: Smartphone, 
-              description: "Building native experiences that feel intuitive and responsive" 
-            },
-            { 
-              title: "Open Source", 
-              icon: Github, 
-              description: "Contributing to community projects and sharing knowledge" 
-            },
-            { 
-              title: "Personal Growth", 
-              icon: Heart, 
-              description: "Constantly learning and improving both technical and soft skills" 
-            },
-          ].map((interest, i) => (
-            <div key={i} className="flex items-start gap-3 p-3">
-              <div className="p-2 rounded-full bg-primary/10 text-primary">
-                <interest.icon className="h-4 w-4" />
-              </div>
-              <div>
-                <h4 className="font-medium">{interest.title}</h4>
-                <p className="text-sm text-muted-foreground">{interest.description}</p>
-              </div>
-            </div>
-          ))}
-        </div>
-      </motion.div>
-    ),
   };
   
   return (
     <section id="about" className="py-32 px-4 relative overflow-hidden">
-      {/* Background decorative elements */}
-      <div className="absolute top-20 left-0 w-96 h-96 bg-primary/5 rounded-full blur-3xl -z-10"></div>
-      <div className="absolute bottom-20 right-0 w-96 h-96 bg-primary/5 rounded-full blur-3xl -z-10"></div>
+      {/* Simplified background elements */}
       <div className="absolute inset-0 bg-grid-pattern opacity-[0.02] -z-10"></div>
       
       <div className="container mx-auto max-w-5xl">
@@ -349,7 +246,6 @@ export const AboutSection = () => {
               {[
                 { id: "about", label: "About", icon: User },
                 { id: "experience", label: "Experience", icon: BookOpen },
-                { id: "interests", label: "", icon: Heart }
               ].map((tab) => (
                 <motion.button
                   key={tab.id}
@@ -420,8 +316,8 @@ export const AboutSection = () => {
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <motion.a 
                   href="#contact" 
-                  className="cosmic-button shadow-lg flex items-center justify-center gap-2"
-                  whileHover={{ scale: 1.03, boxShadow: "0 10px 25px -5px rgba(0, 0, 0, 0.1)" }}
+                  className="px-6 py-2.5 rounded-full bg-primary text-primary-foreground hover:bg-primary/90 transition-all duration-300 flex items-center justify-center gap-2 shadow-md"
+                  whileHover={{ scale: 1.03 }}
                   whileTap={{ scale: 0.98 }}
                 >
                   Get In Touch
@@ -430,8 +326,8 @@ export const AboutSection = () => {
                 <motion.a
                   href="/projects/CV.pdf"
                   download="Abdullah_Mansoor_CV.pdf"
-                  className="px-6 py-2 rounded-full border-2 border-primary/60 text-primary hover:bg-primary/10 transition-all duration-300 flex items-center justify-center gap-2 shadow-md"
-                  whileHover={{ scale: 1.03, y: -2, boxShadow: "0 10px 25px -5px rgba(0, 0, 0, 0.1)" }}
+                  className="px-6 py-2.5 rounded-full border-2 border-primary/60 text-primary hover:bg-primary/10 transition-all duration-300 flex items-center justify-center gap-2 shadow-md"
+                  whileHover={{ scale: 1.03 }}
                   whileTap={{ scale: 0.98 }}
                 >
                   <Download className="h-4 w-4" />
@@ -440,44 +336,6 @@ export const AboutSection = () => {
               </div>
             </motion.div>
           </motion.div>
-        </div>
-        
-        {/* Feature cards section */}
-        <div className="mt-20">
-          <motion.h3 
-            className="text-2xl font-semibold mb-10 text-center"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-          >
-            What I <span className="text-primary">Do</span>
-          </motion.h3>
-          
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <FeatureCard
-              icon={Code}
-              title="Web Development"
-              description="Creating responsive websites and web applications with modern frameworks like React and Next.js. Focusing on creating beautiful user experiences with clean, efficient code."
-              delay={0.1}
-            />
-            
-            <FeatureCard
-              icon={User}
-              title="App Development"
-              description="Building Android apps in Android Studio with help of Jetpack Compose and modern architecture patterns. Creating native mobile experiences that users love."
-              delay={0.2}
-              color="indigo"
-            />
-            
-            <FeatureCard
-              icon={Briefcase}
-              title="Computer Science"
-              description="Applying theoretical knowledge to practical problems, algorithms, and system design. Using computer science principles to solve complex technical challenges."
-              delay={0.3}
-              color="amber"
-            />
-          </div>
         </div>
       </div>
       
@@ -490,22 +348,3 @@ export const AboutSection = () => {
     </section>
   );
 };
-
-// Fix missing import for Smartphone icon 
-const Smartphone = (props) => (
-  <svg
-    {...props}
-    xmlns="http://www.w3.org/2000/svg"
-    width="24"
-    height="24"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="2"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-  >
-    <rect x="5" y="2" width="14" height="20" rx="2" ry="2" />
-    <line x1="12" y1="18" x2="12" y2="18" />
-  </svg>
-);

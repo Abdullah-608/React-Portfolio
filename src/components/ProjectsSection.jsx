@@ -369,7 +369,7 @@ export const ProjectsSection = () => {
                   onMouseLeave={() => setHoveredProject(null)}
                 >
                   {/* Project image with overlay */}
-                  <div className="relative h-56 overflow-hidden">
+                  <div className="relative h-56 overflow-hidden ">
                     <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent z-10 opacity-70 transition-opacity group-hover:opacity-90" />
                     
                     <img 
