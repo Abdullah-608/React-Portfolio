@@ -9,10 +9,6 @@ import {
   Calendar, 
   Clock, 
   Loader2, 
-  Github, 
-  Linkedin, 
-  Twitter, 
-  Instagram 
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useToast } from "@/hooks/use-toast";

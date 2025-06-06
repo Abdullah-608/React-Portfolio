@@ -21,7 +21,6 @@
   --animate-fade-in-delay-3: fade-in 0.7s ease-out 0.6s forwards;
   --animate-fade-in-delay-4: fade-in 0.7s ease-out 0.8s forwards;
   --animate-meteor: meteor 5s linear infinite;
-  --animate-twinkle: twinkle 4s ease-in-out infinite;
 
   @keyframes float {
     0%, 100% { transform: translateY(0); }
@@ -40,33 +39,29 @@
     70% { opacity: 1; }
     100% { transform: rotate(215deg) translateX(-500px); opacity: 0; }
   }
-  @keyframes twinkle {
-    0%, 100% { opacity: 0.8; transform: scale(1); }
-    50% { opacity: 1; transform: scale(1.2); box-shadow: 0 0 20px 5px rgba(255, 255, 255, 0.8); }
-  }
 }
 
 @layer base {
 :root {
-  /* Cosmic Radiance (Light Space Theme) */
-  --background: 240 30% 3%;           /* Almost black with hint of blue */
-  --foreground: 210 100% 90%;         /* Cosmic white-blue */
-  --card: 240 30% 8%;                 /* Deep space card */
-  --primary: 180 100% 65%;            /* Nebula cyan */
-  --primary-foreground: 0 0% 100%;    /* Pure white */
-  --border: 270 100% 65%;             /* Cosmic purple */
+  /* Neon Desert Light */
+  --background: 240 100% 10%;          /* Deep midnight blue */
+  --foreground: 160 100% 85%;          /* Neon green text */
+  --card: 240 100% 15%;                /* Dark slate with glow contrast */
+  --primary: 200 100% 60%;             /* Electric blue (main neon) */
+  --primary-foreground: 0 0% 100%;     /* Bright white */
+  --border: 280 100% 75%;              /* Neon pink border */
 }
+
 
 .dark {
-  /* Deep Space (Dark Space Theme) */
-  --background: 240 50% 2%;           /* Pure black with hint of blue */
-  --foreground: 220 30% 85%;          /* Starlight white */
-  --card: 250 40% 6%;                 /* Dark nebula background */
-  --primary: 250 100% 60%;            /* Galaxy purple */
-  --primary-foreground: 0 0% 100%;    /* Pure white */
-  --border: 200 100% 40%;             /* Nebula blue */
+  /* Desert Night */
+   --background: 240 60% 5%; /* Midnight black */
+  --foreground: 45 20% 90%; /* Desert moonlight */
+  --card: 30 25% 15%; /* Slightly lighter sand */
+  --primary: 20 80% 50%; /* Desert sunset */
+  --primary-foreground: 0 0% 100%; /* White */
+  --border: 35 40% 30%; /* Rich clay border */
 }
-
   * {
     @apply border-border;
   }
@@ -94,7 +89,7 @@
 
 @utility text-glow {
   @apply relative;
-  text-shadow: 0 0 12px rgba(140, 120, 255, 0.7);
+  text-shadow: 0 0 12px rgba(139, 92, 246, 0.6);
 }
 
 @utility card-hover {
@@ -106,22 +101,11 @@
   background: linear-gradient(to right, hsl(var(--card)), hsl(var(--card)));
   background-clip: padding-box;
   border: 1px solid transparent;
-  position: relative;
-}
-
-@utility gradient-border::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  margin: -1px;
-  border-radius: inherit;
-  background: linear-gradient(45deg, hsl(var(--primary)), hsl(var(--border)));
-  z-index: -1;
 }
 
 @utility cosmic-button {
   @apply px-6 py-2 rounded-full bg-primary text-primary-foreground font-medium 
-         transition-all duration-300 hover:shadow-[0_0_14px_rgba(140,120,255,0.7)]
+         transition-all duration-300 hover:shadow-[0_0_14px_rgba(139,92,246,0.6)]
          hover:scale-105 active:scale-95;
 }
 
@@ -135,35 +119,20 @@
   box-shadow: 0 0 16px 6px rgba(255, 255, 255, 0.4);
 }
 
-@utility celestial-glow {
-  box-shadow: 0 0 25px 5px rgba(var(--glow-color, 140 120 255), 0.4);
-  animation: var(--animate-twinkle);
-}
-
-@utility cosmic-nebula {
-  background: radial-gradient(
-    circle at center,
-    hsla(var(--primary), 0.3),
-    hsla(var(--border), 0.1) 70%,
-    transparent 100%
-  );
-  filter: blur(40px);
-}
-
 #root {
   max-width: 100%;
   margin: 0 auto;
   padding: 0;
   text-align: center;
 }
-
 /* Theme Toggle Animations */
+
 html.dark .theme-toggle-ripple {
-  background-color: rgba(20, 20, 40, 0.7); /* Dark space theme */
+  background-color: rgba(20, 30, 45, 0.7); /* Improved slate-dark with opacity */
 }
 
 html:not(.dark) .theme-toggle-ripple {
-  background-color: rgba(30, 40, 70, 0.7); /* Light space theme */
+  background-color: rgba(240, 248, 255, 0.7); /* Slight blue tint to white with opacity */
 }
 
 .theme-toggle-button {
@@ -190,22 +159,16 @@ html:not(.dark) .theme-toggle-ripple {
 }
 
 /* Ray animations */
+
 .stars-container, .rays-container {
   animation: fadeIn 0.3s forwards;
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
-
-@keyframes rotateOut {
-  from { transform: rotate(0deg); opacity: 1; }
-  to { transform: rotate(100deg); opacity: 0; }
-}
-
-@keyframes rotateIn {
-  from { transform: rotate(-100deg); opacity: 0; }
-  to { transform: rotate(0deg); opacity: 1; }
-}
-

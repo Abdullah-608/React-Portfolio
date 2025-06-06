@@ -67,8 +67,9 @@ const fetchGitHubRepos = async (username) => {
     const repos = await response.json();
     
     // Filter out forked repositories and those with no description
+    // Only include JavaScript and TypeScript projects
     return repos
-      .filter(repo => !repo.fork && repo.description)
+      .filter(repo => !repo.fork && repo.description && (repo.language === "JavaScript" || repo.language === "TypeScript"))
       .slice(0, 6); // Limit to 6 repositories
   } catch (error) {
     console.error("Error fetching GitHub repositories:", error);
@@ -81,20 +82,6 @@ const getLanguageColor = (language) => {
   const colors = {
     JavaScript: "#f1e05a",
     TypeScript: "#3178c6",
-    Python: "#3572A5",
-    Java: "#b07219",
-    C: "#555555",
-    "C++": "#f34b7d",
-    Ruby: "#701516",
-    PHP: "#4F5D95",
-    Go: "#00ADD8",
-    Rust: "#dea584",
-    Swift: "#ffac45",
-    Kotlin: "#F18E33",
-    HTML: "#e34c26",
-    CSS: "#563d7c",
-    Shell: "#89e051",
-    "C#": "#178600",
     default: "#6e5494", // Default purple
   };
 
@@ -133,8 +120,13 @@ export const ProjectsSection = () => {
 
   // Process repositories with additional data
   const processRepositories = useCallback(async (repos) => {
-    // Extract all unique languages
-    const languages = ["All", ...new Set(repos.filter(repo => repo.language).map(repo => repo.language))];
+    // Extract all unique languages - only JavaScript and TypeScript
+    const supportedLanguages = ["JavaScript", "TypeScript"];
+    const languages = ["All", ...new Set(
+      repos
+        .filter(repo => repo.language && supportedLanguages.includes(repo.language))
+        .map(repo => repo.language)
+    )];
     setAllLanguages(languages);
 
     // Enhanced projects with images
@@ -151,7 +143,6 @@ export const ProjectsSection = () => {
       if (!imageUrl) {
         // Generate a colored gradient based on the repo language
         const langColor = getLanguageColor(repo.language || 'default');
-        const secondaryColor = repo.language ? langColor : '#6e5494';
         imageUrl = `https://via.placeholder.com/800x400/1a1a2e/ffffff?text=${encodeURIComponent(repo.name)}`;
       }
       
@@ -190,7 +181,7 @@ export const ProjectsSection = () => {
     loadGitHubProjects();
   }, [processRepositories]);
 
-  // Fallback project data to use if GitHub API fails
+  // Fallback project data to use if GitHub API fails - only JS and TS projects
   const fallbackProjects = [
     {
       id: 1,
@@ -277,7 +268,7 @@ export const ProjectsSection = () => {
     if (error) {
       setProjects(fallbackProjects);
       setFilteredProjects(fallbackProjects);
-      const languages = ["All", ...new Set(fallbackProjects.filter(p => p.language).map(p => p.language))];
+      const languages = ["All", ...new Set(fallbackProjects.map(p => p.language))];
       setAllLanguages(languages);
     }
   }, [error]);
@@ -307,7 +298,7 @@ export const ProjectsSection = () => {
           </p>
         </div>
 
-        {/* Language filter pills */}
+        {/* Language filter pills - only JS and TS */}
         {!loading && !error && allLanguages.length > 2 && (
           <div className="flex flex-wrap justify-center gap-2 mb-10" data-aos="fade-up" data-aos-delay="100">
             {allLanguages.map((language) => (
@@ -470,19 +461,19 @@ export const ProjectsSection = () => {
                   
                   {/* View details button (only visible on hover) */}
                   <div className={cn(
-  "absolute inset-0 bg-black/60 flex items-center justify-center transition-opacity duration-300 z-50",
-  hoveredProject === project.id ? "opacity-100" : "opacity-0 pointer-events-none"
-)}>
-  <a
-    href={project.html_url}
-    target="_blank"
-    rel="noopener noreferrer"
-    className="px-6 py-3 bg-primary text-primary-foreground rounded-full flex items-center gap-2 hover:bg-primary/90 transition-all transform hover:scale-105"
-  >
-    <Eye size={18} />
-    View Project
-  </a>
-</div>
+                    "absolute inset-0 bg-black/60 flex items-center justify-center transition-opacity duration-300 z-50",
+                    hoveredProject === project.id ? "opacity-100" : "opacity-0 pointer-events-none"
+                  )}>
+                    <a
+                      href={project.html_url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="px-6 py-3 bg-primary text-primary-foreground rounded-full flex items-center gap-2 hover:bg-primary/90 transition-all transform hover:scale-105"
+                    >
+                      <Eye size={18} />
+                      View Project
+                    </a>
+                  </div>
                 </motion.div>
               ))}
             </motion.div>
