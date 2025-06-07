@@ -147,7 +147,7 @@ export const HeroSection = () => {
           </div>
           
           {/* Professional profile picture - right side */}
-          <div className="md:w-2/5 flex justify-center">
+          <div className="md:w-2/5 flex justify-center mt-6 lg:mt-0">
             <div className="relative">
               {/* Subtle decorative ring */}
               <div className="absolute inset-0 -m-4 sm:-m-6 md:-m-8 rounded-full border-[2px] border-dashed border-primary/20 animate-spin-slow"></div>
