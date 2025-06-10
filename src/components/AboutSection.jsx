@@ -113,11 +113,11 @@ export const AboutSection = () => {
 
         <div className="space-y-4">
           <p className="text-muted-foreground leading-relaxed">
-            Hey! I'm Abdullah — a 20-year-old computer science enthusiast who loves building cool stuff with code. I'm all about web development (especially React and Node.js), staying fit, learning new things every day, and becoming the best version of myself — spiritually, mentally, and physically.
+            Hey! I'm Abdullah — a computer science enthusiast who loves building cool stuff with code. I'm all about web development (especially React and Node.js), staying fit, learning new things every day.
           </p>
           
           <p className="text-muted-foreground leading-relaxed">
-            Right now, I'm on a mission to grow in Development, build awesome projects, and earn a Fortune. I'm passionate about creating intuitive interfaces and solving complex problems with elegant solutions.
+            Right now, I'm on a mission to grow in Development, build awesome projects. I'm passionate about creating intuitive interfaces and solving complex problems with elegant solutions.
           </p>
           
           <div className="pt-2 flex items-center space-x-2 text-sm text-muted-foreground">

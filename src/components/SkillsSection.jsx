@@ -8,35 +8,35 @@ const skills = [
   // Frontend
   { 
     name: "HTML/CSS", 
-    level: 95, 
+    level: 80, 
     category: "Frontend",
     icon: "devicon-html5-plain",
     description: "Creating responsive, accessible and semantic markup with modern CSS techniques"
   },
   { 
     name: "JavaScript", 
-    level: 90, 
+    level: 60, 
     category: "Frontend",
     icon: "devicon-javascript-plain",
     description: "ES6+, async/await, DOM manipulation, and modern JS patterns"
   },
   { 
     name: "React", 
-    level: 90, 
+    level: 50, 
     category: "Frontend",
     icon: "devicon-react-original",
     description: "Building complex UI with hooks, context API, and state management"
   },
   { 
     name: "Tailwind CSS", 
-    level: 90, 
+    level: 70, 
     category: "Frontend",
     icon: "devicon-tailwindcss-plain",
     description: "Utility-first approach for rapid UI development with custom configurations"
   },
   { 
     name: "Bootstrap", 
-    level: 80, 
+    level: 65, 
     category: "Frontend",
     icon: "devicon-bootstrap-plain",
     description: "Component-based development with responsive grid system"
@@ -45,7 +45,7 @@ const skills = [
   // Programming Languages
   { 
     name: "C/C++", 
-    level: 70, 
+    level: 60, 
     category: "Programming Language",
     icon: "devicon-cplusplus-plain",
     description: "Data structures, algorithms, and systems programming"
@@ -68,28 +68,28 @@ const skills = [
   // Backend
   { 
     name: "Node.js", 
-    level: 80, 
+    level: 50, 
     category: "Backend",
     icon: "devicon-nodejs-plain",
     description: "Server-side JavaScript, RESTful APIs, and microservices"
   },
   { 
     name: "Express", 
-    level: 75, 
+    level: 60, 
     category: "Backend",
     icon: "devicon-express-original",
     description: "Building robust APIs, middleware integration, and routing"
   },
   { 
     name: "MongoDB", 
-    level: 70, 
+    level: 53, 
     category: "Backend",
     icon: "devicon-mongodb-plain",
     description: "NoSQL database design, aggregation, and integration with Node.js"
   },
   { 
     name: "PostgreSQL", 
-    level: 65, 
+    level: 52, 
     category: "Backend",
     icon: "devicon-postgresql-plain",
     description: "Relational database design, complex queries, and performance optimization"
@@ -98,21 +98,21 @@ const skills = [
   // Tools
   { 
     name: "Git/GitHub", 
-    level: 90, 
+    level: 50, 
     category: "Tools",
     icon: "devicon-git-plain",
     description: "Version control, collaborative workflows, and CI/CD integration"
   },
   { 
     name: "Figma", 
-    level: 85, 
+    level: 45, 
     category: "Tools",
     icon: "devicon-figma-plain",
     description: "UI/UX design, prototyping, and design system management"
   },
   { 
     name: "VS Code", 
-    level: 95, 
+    level: 70, 
     category: "Tools",
     icon: "devicon-vscode-plain",
     description: "Advanced IDE customization, extensions, and productivity workflows"
