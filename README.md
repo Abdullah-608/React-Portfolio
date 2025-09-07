@@ -1,6 +1,6 @@
 # Abdullah Mansoor - Portfolio Website
 
-A modern, responsive portfolio website built with React, Vite, and Tailwind CSS showcasing professional skills, projects, and contact information.
+A modern, responsive portfolio website built with React, Vite, and Tailwind CSS showcasing professional skills, projects, and contact information. yooo
 
 **[View Live Portfolio](https://react-portfolio-tau-lime.vercel.app/)** ✨
 
